@@ -131,6 +131,19 @@ export interface Coupon {
   expiresAt: string;
 }
 
+export interface Review {
+  id: string;
+  productId: string;
+  userId: string;
+  userName: string;
+  rating: number;
+  title: string;
+  content: string;
+  createdAt: string;
+  helpful: number;
+  verified: boolean;
+}
+
 export interface FilterState {
   categories: string[];
   brands: string[];
