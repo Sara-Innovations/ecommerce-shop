@@ -2,16 +2,18 @@ import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Star, Heart, ShoppingCart, Minus, Plus, Share2, Truck, Shield, RotateCcw, ChevronRight, Play } from 'lucide-react';
 import { MainLayout } from '@/components/layout';
-import { ProductGrid } from '@/components/product';
+import { ProductGrid, StarRating, ReviewForm, ReviewList } from '@/components/product';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { products, formatPrice, getDiscountPercentage } from '@/data/products';
 import { useStore } from '@/context/StoreContext';
+import { useReviews } from '@/context/ReviewsContext';
 import { cn } from '@/lib/utils';
 
 export default function ProductDetail() {
   const { slug } = useParams<{ slug: string }>();
   const { addToCart, addToWishlist, isInWishlist } = useStore();
+  const { getProductAverageRating, getProductReviewCount } = useReviews();
   
   const product = products.find(p => p.slug === slug);
   
@@ -37,6 +39,8 @@ export default function ProductDetail() {
 
   const hasDiscount = product.originalPrice && product.originalPrice > product.price;
   const inWishlist = isInWishlist(product.id);
+  const dynamicRating = getProductAverageRating(product.id) || product.rating;
+  const dynamicReviewCount = getProductReviewCount(product.id) || product.reviewCount;
   const relatedProducts = products
     .filter(p => p.category.id === product.category.id && p.id !== product.id)
     .slice(0, 4);
@@ -148,21 +152,9 @@ export default function ProductDetail() {
 
             {/* Rating */}
             <div className="flex items-center gap-3 mb-6">
-              <div className="flex items-center gap-1">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    size={18}
-                    className={cn(
-                      i < Math.floor(product.rating)
-                        ? 'text-rating fill-rating'
-                        : 'text-border'
-                    )}
-                  />
-                ))}
-              </div>
+              <StarRating rating={dynamicRating} size={18} />
               <span className="text-sm text-muted-foreground">
-                {product.rating} ({product.reviewCount} reviews)
+                {dynamicRating.toFixed(1)} ({dynamicReviewCount} reviews)
               </span>
             </div>
 
@@ -311,7 +303,7 @@ export default function ProductDetail() {
         {/* Tabs */}
         <div className="mt-16">
           <Tabs defaultValue="description">
-            <TabsList className="w-full justify-start border-b border-border bg-transparent rounded-none p-0 h-auto">
+            <TabsList className="w-full justify-start border-b border-border bg-transparent rounded-none p-0 h-auto flex-wrap">
               <TabsTrigger 
                 value="description"
                 className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-6 py-4"
@@ -323,6 +315,12 @@ export default function ProductDetail() {
                 className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-6 py-4"
               >
                 Specifications
+              </TabsTrigger>
+              <TabsTrigger 
+                value="reviews"
+                className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-6 py-4"
+              >
+                Reviews ({dynamicReviewCount})
               </TabsTrigger>
               <TabsTrigger 
                 value="returns"
@@ -355,6 +353,17 @@ export default function ProductDetail() {
               ) : (
                 <p className="text-muted-foreground">No specifications available.</p>
               )}
+            </TabsContent>
+
+            <TabsContent value="reviews" className="py-8">
+              <div className="grid lg:grid-cols-3 gap-8">
+                <div className="lg:col-span-2">
+                  <ReviewList productId={product.id} />
+                </div>
+                <div>
+                  <ReviewForm productId={product.id} />
+                </div>
+              </div>
             </TabsContent>
 
             <TabsContent value="returns" className="py-8">
