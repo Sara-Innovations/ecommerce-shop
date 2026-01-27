@@ -139,6 +139,7 @@ export interface Review {
   rating: number;
   title: string;
   content: string;
+  images?: string[];
   createdAt: string;
   helpful: number;
   verified: boolean;

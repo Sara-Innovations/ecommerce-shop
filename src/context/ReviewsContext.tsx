@@ -5,7 +5,7 @@ import { useStore } from './StoreContext';
 
 interface ReviewsContextType {
   reviews: Review[];
-  addReview: (productId: string, rating: number, title: string, content: string) => boolean;
+  addReview: (productId: string, rating: number, title: string, content: string, images?: string[]) => boolean;
   getProductReviews: (productId: string) => Review[];
   getProductAverageRating: (productId: string) => number;
   getProductReviewCount: (productId: string) => number;
@@ -26,6 +26,10 @@ const sampleReviews: Review[] = [
     rating: 5,
     title: 'Absolutely love it!',
     content: 'Perfect fit and amazing quality. The material feels premium and the color is exactly as shown. Highly recommend!',
+    images: [
+      'https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=200&h=200&fit=crop',
+      'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=200&h=200&fit=crop'
+    ],
     createdAt: '2026-01-15T10:30:00Z',
     helpful: 12,
     verified: true
@@ -50,6 +54,9 @@ const sampleReviews: Review[] = [
     rating: 5,
     title: 'Best purchase ever!',
     content: 'I have been looking for this exact product for months. Quality exceeded my expectations. Will definitely buy again!',
+    images: [
+      'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=200&h=200&fit=crop'
+    ],
     createdAt: '2026-01-08T09:15:00Z',
     helpful: 15,
     verified: true
@@ -100,7 +107,7 @@ export function ReviewsProvider({ children }: { children: ReactNode }) {
     return isAuthenticated && !hasUserReviewed(productId);
   };
 
-  const addReview = (productId: string, rating: number, title: string, content: string): boolean => {
+  const addReview = (productId: string, rating: number, title: string, content: string, images?: string[]): boolean => {
     if (!user) {
       toast.error('Please login to leave a review');
       return false;
@@ -119,6 +126,7 @@ export function ReviewsProvider({ children }: { children: ReactNode }) {
       rating,
       title,
       content,
+      images: images && images.length > 0 ? images : undefined,
       createdAt: new Date().toISOString(),
       helpful: 0,
       verified: true // Simulating verified purchase
