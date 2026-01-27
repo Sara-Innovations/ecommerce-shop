@@ -8,6 +8,7 @@ interface StarRatingProps {
   interactive?: boolean;
   onChange?: (rating: number) => void;
   className?: string;
+  showEmpty?: boolean;
 }
 
 export function StarRating({
@@ -16,7 +17,8 @@ export function StarRating({
   size = 18,
   interactive = false,
   onChange,
-  className
+  className,
+  showEmpty = true
 }: StarRatingProps) {
   const handleClick = (index: number) => {
     if (interactive && onChange) {
@@ -24,9 +26,11 @@ export function StarRating({
     }
   };
 
+  const starsToShow = showEmpty ? maxRating : Math.ceil(rating);
+
   return (
     <div className={cn('flex items-center gap-1', className)}>
-      {[...Array(maxRating)].map((_, i) => (
+      {[...Array(starsToShow)].map((_, i) => (
         <button
           key={i}
           type="button"
