@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useStore } from '@/context/StoreContext';
 import { MainLayout } from '@/components/layout';
 import { Button } from '@/components/ui/button';
@@ -26,13 +26,22 @@ const manualPayments: { id: ManualMethod; name: string; icon: React.ReactNode; d
 ];
 
 export default function Checkout() {
-  const { cart, cartTotal } = useStore();
+  const { cart, cartTotal, clearCart, user } = useStore();
+  const navigate = useNavigate();
   const [paymentType, setPaymentType] = useState<PaymentType>('automatic');
   const [selectedAutomatic, setSelectedAutomatic] = useState<AutomaticMethod | null>(null);
   const [selectedManual, setSelectedManual] = useState<ManualMethod | null>(null);
+  const [shippingInfo, setShippingInfo] = useState({
+    fullName: user?.firstName ? `${user.firstName} ${user.lastName}` : '',
+    phone: user?.phone || '',
+    address: '',
+    city: '',
+    postalCode: '',
+  });
 
   const shippingCost = cartTotal > 5000 ? 0 : 100;
-  const totalAmount = cartTotal + shippingCost;
+  const codFee = selectedManual === 'cod' ? 50 : 0;
+  const totalAmount = cartTotal + shippingCost + codFee;
 
   const handlePlaceOrder = () => {
     const paymentMethod = paymentType === 'automatic' ? selectedAutomatic : selectedManual;
@@ -40,7 +49,38 @@ export default function Checkout() {
       toast.error('Please select a payment method');
       return;
     }
-    toast.success('Order placed successfully! (Demo)');
+
+    if (!shippingInfo.fullName || !shippingInfo.address || !shippingInfo.city) {
+      toast.error('Please fill in shipping information');
+      return;
+    }
+
+    // Generate order number
+    const orderNumber = `ORD-${Date.now().toString(36).toUpperCase()}`;
+
+    // Prepare order details for confirmation page
+    const orderDetails = {
+      orderNumber,
+      items: cart.map((item) => ({
+        name: item.product.name,
+        quantity: item.quantity,
+        price: item.product.price,
+        image: item.product.images[0],
+      })),
+      subtotal: cartTotal,
+      shipping: shippingCost,
+      total: totalAmount,
+      paymentMethod:
+        paymentType === 'automatic'
+          ? automaticPayments.find((p) => p.id === selectedAutomatic)?.name || ''
+          : manualPayments.find((p) => p.id === selectedManual)?.name || '',
+      shippingAddress: shippingInfo,
+      email: user?.email || 'customer@example.com',
+    };
+
+    // Clear cart and navigate to confirmation
+    clearCart();
+    navigate('/order-confirmation', { state: { orderDetails } });
   };
 
   if (cart.length === 0) {
@@ -68,11 +108,32 @@ export default function Checkout() {
             <div className="bg-card p-6 rounded-xl border border-border">
               <h3 className="font-semibold text-foreground mb-4">Shipping Information</h3>
               <div className="grid sm:grid-cols-2 gap-4">
-                <Input placeholder="Full Name" />
-                <Input placeholder="Phone Number" />
-                <Input placeholder="Street Address" className="sm:col-span-2" />
-                <Input placeholder="City" />
-                <Input placeholder="Postal Code" />
+                <Input
+                  placeholder="Full Name"
+                  value={shippingInfo.fullName}
+                  onChange={(e) => setShippingInfo((prev) => ({ ...prev, fullName: e.target.value }))}
+                />
+                <Input
+                  placeholder="Phone Number"
+                  value={shippingInfo.phone}
+                  onChange={(e) => setShippingInfo((prev) => ({ ...prev, phone: e.target.value }))}
+                />
+                <Input
+                  placeholder="Street Address"
+                  className="sm:col-span-2"
+                  value={shippingInfo.address}
+                  onChange={(e) => setShippingInfo((prev) => ({ ...prev, address: e.target.value }))}
+                />
+                <Input
+                  placeholder="City"
+                  value={shippingInfo.city}
+                  onChange={(e) => setShippingInfo((prev) => ({ ...prev, city: e.target.value }))}
+                />
+                <Input
+                  placeholder="Postal Code"
+                  value={shippingInfo.postalCode}
+                  onChange={(e) => setShippingInfo((prev) => ({ ...prev, postalCode: e.target.value }))}
+                />
               </div>
             </div>
 

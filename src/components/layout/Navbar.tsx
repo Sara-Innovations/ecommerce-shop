@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Search, Heart, ShoppingCart, User, Menu, X, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { useStore } from '@/context/StoreContext';
+import { SearchSuggestions } from '@/components/search/SearchSuggestions';
 
 export function Navbar() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -12,8 +12,7 @@ export function Navbar() {
   const { cartCount, wishlist, isAuthenticated, searchQuery, setSearchQuery } = useStore();
   const navigate = useNavigate();
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSearch = () => {
     if (searchQuery.trim()) {
       navigate(`/shop?search=${encodeURIComponent(searchQuery)}`);
       setIsSearchOpen(false);
@@ -40,22 +39,14 @@ export function Navbar() {
             <span className="hidden sm:inline">ShopVerse</span>
           </Link>
 
-          {/* Desktop Search */}
-          <form
-            onSubmit={handleSearch}
-            className="hidden lg:flex flex-1 max-w-xl mx-8"
-          >
-            <div className="relative w-full">
-              <Input
-                type="search"
-                placeholder="Search for products, brands and more..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 h-12 bg-surface border-none rounded-full focus-visible:ring-2 focus-visible:ring-primary"
-              />
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" size={20} />
-            </div>
-          </form>
+          {/* Desktop Search with Suggestions */}
+          <SearchSuggestions
+            value={searchQuery}
+            onChange={setSearchQuery}
+            onSearch={handleSearch}
+            className="hidden lg:block flex-1 max-w-xl mx-8"
+            placeholder="Search for products, brands and more..."
+          />
 
           {/* Right Actions */}
           <div className="flex items-center gap-1 md:gap-2">
@@ -112,21 +103,17 @@ export function Navbar() {
           </div>
         </div>
 
-        {/* Mobile Search Bar */}
+        {/* Mobile Search Bar with Suggestions */}
         {isSearchOpen && (
-          <form onSubmit={handleSearch} className="lg:hidden pb-4 animate-slide-down">
-            <div className="relative">
-              <Input
-                type="search"
-                placeholder="Search products..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 bg-surface border-none rounded-full"
-                autoFocus
-              />
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" size={20} />
-            </div>
-          </form>
+          <div className="lg:hidden pb-4 animate-slide-down">
+            <SearchSuggestions
+              value={searchQuery}
+              onChange={setSearchQuery}
+              onSearch={handleSearch}
+              placeholder="Search products..."
+              autoFocus
+            />
+          </div>
         )}
       </div>
 

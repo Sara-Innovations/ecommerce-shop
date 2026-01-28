@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
-import { Heart, ShoppingCart, Star, Eye } from 'lucide-react';
+import { Heart, ShoppingCart, Star, Eye, GitCompare } from 'lucide-react';
 import { Product } from '@/types';
 import { formatPrice, getDiscountPercentage } from '@/data/products';
 import { useStore } from '@/context/StoreContext';
+import { useCompare } from '@/context/CompareContext';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -13,8 +14,10 @@ interface ProductCardProps {
 
 export function ProductCard({ product, className }: ProductCardProps) {
   const { addToCart, addToWishlist, isInWishlist } = useStore();
+  const { addToCompare, isInCompare } = useCompare();
   const hasDiscount = product.originalPrice && product.originalPrice > product.price;
   const inWishlist = isInWishlist(product.id);
+  const inCompare = isInCompare(product.id);
 
   return (
     <article className={cn('product-card group', className)}>
@@ -49,12 +52,26 @@ export function ProductCard({ product, className }: ProductCardProps) {
                 ? 'bg-sale text-sale-foreground'
                 : 'bg-card text-foreground hover:bg-sale hover:text-sale-foreground'
             )}
+            title={inWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
           >
             <Heart size={18} fill={inWishlist ? 'currentColor' : 'none'} />
+          </button>
+          <button
+            onClick={() => addToCompare(product)}
+            className={cn(
+              'w-9 h-9 rounded-full flex items-center justify-center transition-colors',
+              inCompare
+                ? 'bg-primary text-primary-foreground'
+                : 'bg-card text-foreground hover:bg-primary hover:text-primary-foreground'
+            )}
+            title={inCompare ? 'Remove from compare' : 'Add to compare'}
+          >
+            <GitCompare size={18} />
           </button>
           <Link
             to={`/product/${product.slug}`}
             className="w-9 h-9 rounded-full bg-card text-foreground hover:bg-primary hover:text-primary-foreground flex items-center justify-center transition-colors"
+            title="Quick view"
           >
             <Eye size={18} />
           </Link>
