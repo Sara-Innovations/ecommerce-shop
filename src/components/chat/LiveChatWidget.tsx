@@ -92,13 +92,13 @@ export function LiveChatWidget() {
 
   return (
     <>
-      {/* Chat Toggle Button */}
+      {/* Chat Toggle Button - Hidden on mobile */}
       <button
         onClick={() => setIsOpen(true)}
         className={cn(
-          'fixed bottom-4 right-4 z-50 w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-lg flex items-center justify-center transition-all hover:scale-110',
-          'lg:bottom-6 lg:right-6',
-          isOpen && 'hidden'
+          'fixed bottom-20 right-4 z-50 w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-lg items-center justify-center transition-all hover:scale-110',
+          'hidden lg:flex lg:bottom-6 lg:right-6',
+          isOpen && '!hidden'
         )}
       >
         <MessageCircle size={24} />

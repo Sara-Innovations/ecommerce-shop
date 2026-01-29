@@ -81,12 +81,12 @@ export function ProductGrid({
       {/* Carousel */}
       {carousel ? (
         <div className="relative">
-          {/* Scroll Buttons */}
+          {/* Scroll Buttons - Desktop only */}
           {canScrollLeft && (
             <Button
               variant="secondary"
               size="icon"
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 shadow-lg hidden md:flex"
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 shadow-lg hidden lg:flex"
               onClick={() => scroll('left')}
             >
               <ChevronLeft size={20} />
@@ -96,25 +96,25 @@ export function ProductGrid({
             <Button
               variant="secondary"
               size="icon"
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 shadow-lg hidden md:flex"
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 shadow-lg hidden lg:flex"
               onClick={() => scroll('right')}
             >
               <ChevronRight size={20} />
             </Button>
           )}
 
-          {/* Scrollable Container */}
+          {/* Scrollable Container - Touch swipe on mobile */}
           <div
             ref={scrollRef}
             onScroll={checkScroll}
-            className="flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
+            className="flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth pb-4 snap-x snap-mandatory touch-pan-x"
           >
             {products.map(product => (
               <div
                 key={product.id}
-                className="flex-shrink-0 w-[calc(50%-8px)] sm:w-[calc(33.333%-11px)] lg:w-[calc(25%-12px)] xl:w-[calc(20%-13px)]"
+                className="flex-shrink-0 w-[calc(50%-8px)] sm:w-[calc(33.333%-11px)] lg:w-[calc(25%-12px)] xl:w-[calc(20%-13px)] snap-start"
               >
-                <ProductCard product={product} />
+                <ProductCard product={product} compact />
               </div>
             ))}
           </div>
