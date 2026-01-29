@@ -10,9 +10,10 @@ import { cn } from '@/lib/utils';
 interface ProductCardProps {
   product: Product;
   className?: string;
+  compact?: boolean;
 }
 
-export function ProductCard({ product, className }: ProductCardProps) {
+export function ProductCard({ product, className, compact = false }: ProductCardProps) {
   const { addToCart, addToWishlist, isInWishlist } = useStore();
   const { addToCompare, isInCompare } = useCompare();
   const hasDiscount = product.originalPrice && product.originalPrice > product.price;
@@ -125,10 +126,13 @@ export function ProductCard({ product, className }: ProductCardProps) {
         </div>
 
         {/* Price */}
-        <div className="flex items-center gap-2">
-          <span className="price-current">{formatPrice(product.price)}</span>
+        <div className={cn(
+          "flex items-center gap-2",
+          compact && "flex-nowrap overflow-x-auto scrollbar-hide"
+        )}>
+          <span className={cn("price-current whitespace-nowrap", compact && "text-sm")}>{formatPrice(product.price)}</span>
           {hasDiscount && (
-            <span className="price-original">
+            <span className={cn("price-original whitespace-nowrap", compact && "text-xs")}>
               {formatPrice(product.originalPrice!)}
             </span>
           )}

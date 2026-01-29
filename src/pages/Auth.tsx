@@ -65,7 +65,7 @@ export default function Auth() {
                 <form onSubmit={handleLogin} className="space-y-4">
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
-                    <Input name="email" type="email" placeholder="Email or Phone" className="pl-10" required />
+                    <Input name="email" type="text" placeholder="Email or Phone" className="pl-10" required />
                   </div>
                   <div className="relative">
                     <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
@@ -81,13 +81,23 @@ export default function Auth() {
 
               <TabsContent value="register">
                 <form onSubmit={handleRegister} className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="relative"><User className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} /><Input name="firstName" placeholder="First Name" className="pl-10" required /></div>
-                    <Input name="lastName" placeholder="Last Name" required />
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
+                    <Input name="firstName" placeholder="First Name" className="pl-10" required />
                   </div>
-                  <div className="relative"><Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} /><Input name="email" type="email" placeholder="Email" className="pl-10" required /></div>
-                  <div className="relative"><Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} /><Input name="phone" placeholder="Phone Number" className="pl-10" /></div>
-                  <div className="relative"><Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} /><Input name="password" type="password" placeholder="Password" className="pl-10" required /></div>
+                  <Input name="lastName" placeholder="Last Name" required />
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
+                    <Input name="email" type="email" placeholder="Email" className="pl-10" required />
+                  </div>
+                  <div className="relative">
+                    <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
+                    <Input name="phone" placeholder="Phone Number" className="pl-10" />
+                  </div>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
+                    <Input name="password" type="password" placeholder="Password" className="pl-10" required />
+                  </div>
                   <Button type="submit" className="w-full" disabled={isLoading}>{isLoading ? 'Creating Account...' : 'Create Account'}</Button>
                 </form>
               </TabsContent>

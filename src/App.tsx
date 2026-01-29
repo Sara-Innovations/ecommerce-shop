@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { StoreProvider } from "@/context/StoreContext";
 import { ReviewsProvider } from "@/context/ReviewsContext";
 import { CompareProvider } from "@/context/CompareContext";
+import { ScrollToTop } from "@/components/layout";
 import Index from "./pages/Index";
 import Shop from "./pages/Shop";
 import ProductDetail from "./pages/ProductDetail";
@@ -39,6 +40,7 @@ const App = () => (
             <Toaster />
             <Sonner />
             <BrowserRouter>
+              <ScrollToTop />
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/shop" element={<Shop />} />
