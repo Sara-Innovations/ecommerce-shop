@@ -100,31 +100,45 @@ export function SearchSuggestions({
 
       {/* Suggestions Dropdown */}
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-card rounded-xl border border-border shadow-xl z-50 overflow-hidden animate-fade-in">
+        <div className="absolute top-full left-0 right-0 mt-2 bg-card rounded-xl border border-border shadow-xl z-50 overflow-hidden animate-fade-in max-h-[70vh] overflow-y-auto lg:max-h-none lg:overflow-visible">
           {/* Product Suggestions */}
-          {suggestions.length > 0 && (
+          {value && (
             <div className="p-2">
               <p className="px-3 py-2 text-xs font-medium text-muted-foreground uppercase">
                 Products
               </p>
-              {suggestions.map((product) => (
-                <Link
-                  key={product.id}
-                  to={`/product/${product.slug}`}
-                  onClick={() => setIsOpen(false)}
-                  className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-surface transition-colors"
-                >
-                  <img
-                    src={product.images[0]}
-                    alt={product.name}
-                    className="w-10 h-10 rounded-lg object-cover"
-                  />
-                  <div className="flex-1 min-w-0">
-                    <p className="font-medium text-foreground truncate">{product.name}</p>
-                    <p className="text-xs text-muted-foreground">{product.category?.name}</p>
-                  </div>
-                </Link>
-              ))}
+              {suggestions.length > 0 ? (
+                suggestions.map((product) => (
+                  <Link
+                    key={product.id}
+                    to={`/product/${product.slug}`}
+                    onClick={() => setIsOpen(false)}
+                    className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-surface transition-colors"
+                  >
+                    <img
+                      src={product.images[0]}
+                      alt={product.name}
+                      className="w-10 h-10 rounded-lg object-cover"
+                    />
+                    <div className="flex-1 min-w-0">
+                      <p className="font-medium text-foreground truncate">{product.name}</p>
+                      <p className="text-xs text-muted-foreground">{product.category?.name}</p>
+                    </div>
+                  </Link>
+                ))
+              ) : (
+                <div className="px-3 py-4 text-center">
+                  <p className="text-sm text-muted-foreground mb-2">
+                    No products found for "{value}"
+                  </p>
+                  <button
+                    onClick={() => handleSearch(value)}
+                    className="text-sm text-primary hover:text-primary-hover font-medium"
+                  >
+                    Search for "{value}" in all products
+                  </button>
+                </div>
+              )}
             </div>
           )}
 

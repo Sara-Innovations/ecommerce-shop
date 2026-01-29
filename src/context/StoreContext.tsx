@@ -160,12 +160,17 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     // Mock login - replace with actual API call
     await new Promise(resolve => setTimeout(resolve, 1000));
     
-    if (email && password) {
+    // Validate if input is email or mobile number
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const isMobile = /^01[3-9]\d{8}$/.test(email); // Bangladesh mobile format
+    
+    if (email && password && (isEmail || isMobile)) {
       setUser({
         id: '1',
-        email,
+        email: isEmail ? email : '', // Only store if it's actually an email
         firstName: 'John',
         lastName: 'Doe',
+        phone: isMobile ? email : '', // Store mobile number if it's a mobile
         addresses: [],
         createdAt: new Date().toISOString()
       });
@@ -173,7 +178,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       return true;
     }
     
-    toast.error('Invalid credentials');
+    toast.error('Invalid credentials. Please enter a valid email or mobile number.');
     return false;
   };
 

@@ -257,7 +257,7 @@ export default function Checkout() {
                       <h4 className="font-medium text-foreground mb-2">Bank Transfer Details</h4>
                       <div className="text-sm text-muted-foreground space-y-1">
                         <p><strong>Bank:</strong> ABC Bank Limited</p>
-                        <p><strong>Account Name:</strong> ShopVerse Ltd</p>
+                        <p><strong>Account Name:</strong> SaraCodeLabsShop Ltd</p>
                         <p><strong>Account Number:</strong> 1234567890123</p>
                         <p><strong>Routing Number:</strong> 123456789</p>
                         <p className="mt-2 text-xs">

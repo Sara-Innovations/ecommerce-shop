@@ -35,10 +35,12 @@ export function Footer() {
             {/* About */}
             <div>
               <Link to="/" className="flex items-center gap-2 font-display text-2xl font-bold mb-6">
-                <span className="bg-primary text-primary-foreground w-10 h-10 rounded-lg flex items-center justify-center">
-                  S
-                </span>
-                <span>ShopVerse</span>
+                <img 
+                  src="/logo2.png" 
+                  alt="SaraCodeLabsShop" 
+                  className="w-10 h-10 rounded-lg"
+                />
+                <span>SaraCodeLabsShop</span>
               </Link>
               <p className="text-primary-foreground/70 mb-6">
                 Your one-stop destination for quality products at competitive prices. Shop with confidence.
@@ -51,8 +53,32 @@ export function Footer() {
               </div>
             </div>
 
-            {/* Quick Links */}
-            <div>
+            {/* Quick Links & Customer Service - Mobile Side by Side */}
+            <div className="lg:hidden flex justify-between gap-8">
+              <div className="flex-1">
+                <h4 className="font-semibold text-lg mb-6">Quick Links</h4>
+                <ul className="space-y-3">
+                  <FooterLink to="/shop">Shop All</FooterLink>
+                  <FooterLink to="/shop?filter=new">New Arrivals</FooterLink>
+                  <FooterLink to="/shop?filter=sale">Offers & Deals</FooterLink>
+                  <FooterLink to="/brands">Brands</FooterLink>
+                  <FooterLink to="/contact">Contact Us</FooterLink>
+                </ul>
+              </div>
+              <div className="flex-1">
+                <h4 className="font-semibold text-lg mb-6">Customer Service</h4>
+                <ul className="space-y-3">
+                  <FooterLink to="/faq">FAQs</FooterLink>
+                  <FooterLink to="/replacement-policy">Replacement Policy</FooterLink>
+                  <FooterLink to="/terms">Terms & Conditions</FooterLink>
+                  <FooterLink to="/privacy">Privacy Policy</FooterLink>
+                  <FooterLink to="/cookies">Cookies Policy</FooterLink>
+                </ul>
+              </div>
+            </div>
+
+            {/* Quick Links - Desktop */}
+            <div className="hidden lg:block">
               <h4 className="font-semibold text-lg mb-6">Quick Links</h4>
               <ul className="space-y-3">
                 <FooterLink to="/shop">Shop All</FooterLink>
@@ -63,8 +89,8 @@ export function Footer() {
               </ul>
             </div>
 
-            {/* Customer Service */}
-            <div>
+            {/* Customer Service - Desktop */}
+            <div className="hidden lg:block">
               <h4 className="font-semibold text-lg mb-6">Customer Service</h4>
               <ul className="space-y-3">
                 <FooterLink to="/faq">FAQs</FooterLink>
@@ -89,7 +115,7 @@ export function Footer() {
                 </li>
                 <li className="flex items-center gap-3 text-primary-foreground/70">
                   <Mail size={20} className="shrink-0" />
-                  <span>support@shopverse.com</span>
+                  <span>info@saracodelabs.com.bd</span>
                 </li>
               </ul>
             </div>
@@ -102,7 +128,7 @@ export function Footer() {
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-sm text-primary-foreground/60">
-              © {new Date().getFullYear()} ShopVerse. All rights reserved.
+              © {new Date().getFullYear()} <a href="https://saracodelabs.com.bd">Sara Code Labs</a> . All rights reserved.
             </p>
             <div className="flex items-center gap-4">
               <span className="text-sm text-primary-foreground/60">We Accept:</span>

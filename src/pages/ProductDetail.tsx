@@ -389,6 +389,7 @@ export default function ProductDetail() {
             showViewAll
             viewAllLink={`/category/${product.category.slug}`}
             columns={4}
+            carousel={true}
             className="mt-16"
           />
         )}

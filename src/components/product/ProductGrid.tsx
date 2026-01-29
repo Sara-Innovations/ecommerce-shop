@@ -29,22 +29,64 @@ export function ProductGrid({
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const checkScroll = () => {
     if (scrollRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
       setCanScrollLeft(scrollLeft > 0);
       setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+      
+      // Calculate active index based on scroll position with better accuracy
+      const container = scrollRef.current;
+      const containerRect = container.getBoundingClientRect();
+      const containerCenter = containerRect.left + containerRect.width / 2;
+      
+      let closestIndex = 0;
+      let closestDistance = Infinity;
+      
+      Array.from(container.children).forEach((child, index) => {
+        const childRect = child.getBoundingClientRect();
+        const childCenter = childRect.left + childRect.width / 2;
+        const distance = Math.abs(containerCenter - childCenter);
+        
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestIndex = index;
+        }
+      });
+      
+      setActiveIndex(closestIndex);
     }
   };
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
-      const scrollAmount = scrollRef.current.clientWidth * 0.8;
-      scrollRef.current.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
-        behavior: 'smooth'
-      });
+      const container = scrollRef.current;
+      const children = Array.from(container.children);
+      const containerRect = container.getBoundingClientRect();
+      const containerCenter = containerRect.left + containerRect.width / 2;
+      
+      let targetIndex = activeIndex;
+      
+      if (direction === 'right' && activeIndex < children.length - 1) {
+        targetIndex = activeIndex + 1;
+      } else if (direction === 'left' && activeIndex > 0) {
+        targetIndex = activeIndex - 1;
+      }
+      
+      const targetChild = children[targetIndex];
+      if (targetChild) {
+        const targetRect = targetChild.getBoundingClientRect();
+        const targetCenter = targetRect.left + targetRect.width / 2;
+        const scrollOffset = targetCenter - containerCenter;
+        
+        container.scrollBy({
+          left: scrollOffset,
+          behavior: 'smooth'
+        });
+      }
+      
       setTimeout(checkScroll, 300);
     }
   };
@@ -107,14 +149,22 @@ export function ProductGrid({
           <div
             ref={scrollRef}
             onScroll={checkScroll}
-            className="flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth pb-4 snap-x snap-mandatory touch-pan-x"
+            className="flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth pb-4 snap-x snap-mandatory touch-pan-x items-stretch"
+            style={{ scrollSnapType: 'x mandatory', scrollBehavior: 'smooth' }}
           >
-            {products.map(product => (
+            {products.map((product, index) => (
               <div
                 key={product.id}
-                className="flex-shrink-0 w-[calc(50%-8px)] sm:w-[calc(33.333%-11px)] lg:w-[calc(25%-12px)] xl:w-[calc(20%-13px)] snap-start"
+                className={cn(
+                  "flex-shrink-0 snap-center transition-all duration-500 ease-out",
+                  // Dynamic sizing only on mobile, uniform on larger screens
+                  index === activeIndex 
+                    ? "w-[calc(75%-12px)] lg:w-[calc(25%-12px)]" // Active card - larger on mobile only
+                    : "w-[calc(45%-10.8px)] lg:w-[calc(25%-12px)]" // Inactive cards - smaller on mobile, uniform on desktop
+                )}
+                style={{ scrollSnapAlign: 'center' }}
               >
-                <ProductCard product={product} compact />
+                <ProductCard product={product} compact={index !== activeIndex} />
               </div>
             ))}
           </div>

@@ -21,9 +21,9 @@ export function ProductCard({ product, className, compact = false }: ProductCard
   const inCompare = isInCompare(product.id);
 
   return (
-    <article className={cn('product-card group', className)}>
+    <article className={cn('product-card group h-full flex flex-col', className)}>
       {/* Image Container */}
-      <div className="product-card-image aspect-product relative">
+      <div className="product-card-image aspect-square relative">
         <Link to={`/product/${product.slug}`}>
           <img
             src={product.images[0]}
@@ -92,7 +92,7 @@ export function ProductCard({ product, className, compact = false }: ProductCard
       </div>
 
       {/* Content */}
-      <div className="p-4">
+      <div className="p-4 flex-1 flex flex-col">
         {/* Brand */}
         <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">
           {product.brand.name}
@@ -100,7 +100,7 @@ export function ProductCard({ product, className, compact = false }: ProductCard
 
         {/* Name */}
         <Link to={`/product/${product.slug}`}>
-          <h3 className="font-medium text-foreground line-clamp-2 hover:text-primary transition-colors mb-2">
+          <h3 className="font-medium text-foreground truncate hover:text-primary transition-colors mb-2" title={product.name}>
             {product.name}
           </h3>
         </Link>
@@ -127,7 +127,7 @@ export function ProductCard({ product, className, compact = false }: ProductCard
 
         {/* Price */}
         <div className={cn(
-          "flex items-center gap-2",
+          "flex items-center gap-2 mt-auto",
           compact && "flex-nowrap overflow-x-auto scrollbar-hide"
         )}>
           <span className={cn("price-current whitespace-nowrap", compact && "text-sm")}>{formatPrice(product.price)}</span>

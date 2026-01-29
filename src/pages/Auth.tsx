@@ -48,8 +48,12 @@ export default function Auth() {
         <div className="w-full max-w-md">
           <div className="text-center mb-8">
             <Link to="/" className="inline-flex items-center gap-2 font-display text-2xl font-bold text-primary mb-2">
-              <span className="bg-gradient-primary text-primary-foreground w-10 h-10 rounded-lg flex items-center justify-center">S</span>
-              ShopVerse
+              <img 
+                src="/logo2.png" 
+                alt="SaraCodeLabsShop" 
+                className="w-auto h-12 rounded-lg"
+              />
+              SaraCodeLabsShop
             </Link>
             <p className="text-muted-foreground">Welcome! Sign in or create an account.</p>
           </div>
@@ -85,7 +89,10 @@ export default function Auth() {
                     <User className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
                     <Input name="firstName" placeholder="First Name" className="pl-10" required />
                   </div>
-                  <Input name="lastName" placeholder="Last Name" required />
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
+                    <Input name="lastName" placeholder="Last Name" className="pl-10" required />
+                  </div>
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
                     <Input name="email" type="email" placeholder="Email" className="pl-10" required />

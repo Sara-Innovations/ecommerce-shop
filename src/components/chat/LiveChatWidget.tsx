@@ -15,7 +15,7 @@ const faqs = [
   { question: 'How do I track my order?', answer: 'You can track your order from the Dashboard > My Orders section. Click on any order to see its current status and tracking information.' },
   { question: 'What is the return policy?', answer: 'We offer a 30-day return policy for most items. Products must be unused and in original packaging. Visit our Returns page for more details.' },
   { question: 'How long does shipping take?', answer: 'Standard shipping takes 3-5 business days. Express shipping is available for 1-2 day delivery. Free shipping on orders over ৳5,000.' },
-  { question: 'How can I contact support?', answer: 'You can reach us via this chat, email at support@shopverse.com, or call us at +880-1234-567890 during business hours.' },
+  { question: 'How can I contact support?', answer: 'You can reach us via this chat, email at info@saracodelabs.com.bd, or call us at +880-1234-567890 during business hours.' },
   { question: 'Do you offer international shipping?', answer: 'Currently, we ship within Bangladesh only. International shipping will be available soon!' },
   { question: 'How do I change my password?', answer: 'Go to Dashboard > Profile Settings and click on "Change Password" to update your password securely.' },
 ];
@@ -25,7 +25,7 @@ export function LiveChatWidget() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: 'Hello! 👋 Welcome to ShopVerse support. How can I help you today?',
+      text: 'Hello! 👋 Welcome to SaraCodeLabsShop support. How can I help you today?',
       isUser: false,
       timestamp: new Date(),
     },
@@ -96,8 +96,7 @@ export function LiveChatWidget() {
       <button
         onClick={() => setIsOpen(true)}
         className={cn(
-          'fixed bottom-20 right-4 z-50 w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-lg items-center justify-center transition-all hover:scale-110',
-          'hidden lg:flex lg:bottom-6 lg:right-6',
+          'fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-lg items-center justify-center transition-all hover:scale-110 hidden lg:flex',
           isOpen && '!hidden'
         )}
       >
@@ -114,7 +113,7 @@ export function LiveChatWidget() {
                 <MessageCircle size={20} />
               </div>
               <div>
-                <h3 className="font-semibold">ShopVerse Support</h3>
+                <h3 className="font-semibold">SaraCodeLabsShop Support</h3>
                 <p className="text-xs opacity-80">We typically reply instantly</p>
               </div>
             </div>

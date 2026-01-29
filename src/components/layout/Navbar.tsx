@@ -23,21 +23,23 @@ export function Navbar() {
     <header className="sticky top-0 z-50 bg-card/95 backdrop-blur-md border-b border-border">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-14 lg:h-20">
-          {/* Mobile Menu Button */}
-          <button
-            className="lg:hidden p-2 -ml-2 text-foreground"
+          {/* Mobile Menu Button - Hidden on mobile, shown on desktop */}
+          {/* <button
+            className="hidden lg:block p-2 -ml-2 text-foreground"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          </button> */}
 
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 font-display text-xl md:text-2xl font-bold text-primary">
-            <span className="bg-gradient-primary text-primary-foreground w-8 h-8 md:w-10 md:h-10 rounded-lg flex items-center justify-center text-lg md:text-xl">
-              S
-            </span>
-            <span className="lg:inline hidden">ShopVerse</span>
-            <span className="lg:hidden">ShopVerse</span>
+            <img 
+              src="/logo2.png" 
+              alt="SaraCodeLabsShop" 
+              className="w-auto h-12  md:h-16 rounded-lg"
+            />
+            {/* <span className="lg:inline hidden">SaraCodeLabsShop</span> */}
+            {/* <span className="lg:hidden">SaraCodeLabsShop</span> */}
           </Link>
 
           {/* Desktop Search with Suggestions */}
@@ -95,7 +97,7 @@ export function Navbar() {
             )}
           </div>
 
-          {/* Mobile - Notification/Search only */}
+          {/* Mobile - Only Search Button */}
           <div className="lg:hidden flex items-center">
             <button
               className="p-2 text-foreground hover:text-primary transition-colors"
@@ -120,7 +122,7 @@ export function Navbar() {
         )}
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - Hidden on mobile */}
       {isMobileMenuOpen && (
         <MobileMenu onClose={() => setIsMobileMenuOpen(false)} />
       )}

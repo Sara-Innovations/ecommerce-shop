@@ -82,6 +82,8 @@ const promoCards = [
 export function HeroSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [startX, setStartX] = useState(0);
+  const [endX, setEndX] = useState(0);
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -90,6 +92,38 @@ export function HeroSection() {
   const prevSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
   }, []);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    setStartX(touch.clientX);
+    setEndX(touch.clientX); // Reset endX
+    setIsAutoPlaying(false); // Pause auto-play on touch
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    setEndX(touch.clientX);
+  };
+
+  const handleTouchEnd = () => {
+    const swipeThreshold = 20; // Even lower threshold for easier swiping
+    const diff = startX - endX;
+    
+    console.log('Swipe diff:', diff, 'startX:', startX, 'endX:', endX); // Debug log
+    
+    if (Math.abs(diff) > swipeThreshold) {
+      if (diff > 0) {
+        console.log('Swiping left - next slide');
+        nextSlide(); // Swipe left - next slide
+      } else {
+        console.log('Swiping right - previous slide');
+        prevSlide(); // Swipe right - previous slide
+      }
+    }
+    
+    // Resume auto-play after a delay
+    setTimeout(() => setIsAutoPlaying(true), 3000);
+  };
 
   useEffect(() => {
     if (!isAutoPlaying) return;
@@ -109,7 +143,44 @@ export function HeroSection() {
             onMouseLeave={() => setIsAutoPlaying(true)}
           >
             {/* Slides */}
-            <div className="relative aspect-[16/9] lg:aspect-[2/1]">
+            <div 
+              className="relative aspect-[16/9] lg:aspect-[2/1] cursor-grab active:cursor-grabbing"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+              onMouseDown={(e) => {
+                const mouse = e;
+                setStartX(mouse.clientX);
+                setEndX(mouse.clientX);
+                setIsAutoPlaying(false);
+              }}
+              onMouseMove={(e) => {
+                if (startX !== 0) {
+                  const mouse = e;
+                  setEndX(mouse.clientX);
+                }
+              }}
+              onMouseUp={() => {
+                const swipeThreshold = 20;
+                const diff = startX - endX;
+                
+                if (Math.abs(diff) > swipeThreshold) {
+                  if (diff > 0) {
+                    nextSlide();
+                  } else {
+                    prevSlide();
+                  }
+                }
+                setStartX(0);
+                setEndX(0);
+                setTimeout(() => setIsAutoPlaying(true), 3000);
+              }}
+              onMouseLeave={() => {
+                setStartX(0);
+                setEndX(0);
+              }}
+              style={{ touchAction: 'none' }}
+            >
               {slides.map((slide, index) => (
                 <div
                   key={slide.id}
@@ -151,7 +222,7 @@ export function HeroSection() {
                       <Link to={slide.buttonLink}>
                         <Button
                           size="lg"
-                          className="bg-card text-foreground hover:bg-card/90 font-semibold"
+                          className="hidden md:block bg-card text-foreground hover:bg-card/90 font-semibold"
                         >
                           {slide.buttonText}
                         </Button>
@@ -162,22 +233,22 @@ export function HeroSection() {
               ))}
             </div>
 
-            {/* Navigation Arrows */}
+            {/* Navigation Arrows - Hidden on mobile */}
             <button
               onClick={prevSlide}
-              className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-card/90 text-foreground flex items-center justify-center hover:bg-card transition-colors"
+              className="hidden lg:flex absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-card/90 text-foreground items-center justify-center hover:bg-card transition-colors"
             >
               <ChevronLeft size={20} />
             </button>
             <button
               onClick={nextSlide}
-              className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-card/90 text-foreground flex items-center justify-center hover:bg-card transition-colors"
+              className="hidden lg:flex absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-card/90 text-foreground items-center justify-center hover:bg-card transition-colors"
             >
               <ChevronRight size={20} />
             </button>
 
-            {/* Dots */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+            {/* Dots - Removed for mobile */}
+            <div className="hidden lg:flex absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
               {slides.map((_, index) => (
                 <button
                   key={index}

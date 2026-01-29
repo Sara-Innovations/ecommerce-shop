@@ -7,7 +7,7 @@ export default function Terms() {
       <div className="container mx-auto px-4 py-12 max-w-3xl prose text-muted-foreground">
         <p>Last updated: January 2024</p>
         <h2 className="text-foreground">Acceptance of Terms</h2>
-        <p>By using ShopVerse, you agree to these terms and conditions.</p>
+        <p>By using SaraCodeLabsShop, you agree to these terms and conditions.</p>
         <h2 className="text-foreground">Orders and Payments</h2>
         <p>All orders are subject to availability and payment confirmation.</p>
         <h2 className="text-foreground">Shipping</h2>

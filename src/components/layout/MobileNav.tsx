@@ -1,12 +1,13 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Search, Heart, ShoppingCart, User } from 'lucide-react';
+import { Home, Store, Heart, ShoppingCart, User } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { useStore } from '@/context/StoreContext';
 import { cn } from '@/lib/utils';
+import { motion } from 'framer-motion';
 
 const navItems = [
   { icon: Home, label: 'Home', path: '/' },
-  { icon: Search, label: 'Search', path: '/shop' },
+  { icon: Store, label: 'Store', path: '/shop' },
   { icon: Heart, label: 'Wishlist', path: '/wishlist' },
   { icon: ShoppingCart, label: 'Cart', path: '/cart' },
   { icon: User, label: 'Account', path: '/dashboard' },
@@ -31,12 +32,36 @@ export function MobileNav() {
               key={item.path}
               to={to}
               className={cn(
-                'flex flex-col items-center justify-center flex-1 h-full relative transition-colors',
-                isActive ? 'text-primary' : 'text-muted-foreground'
+                'flex flex-col items-center justify-center flex-1 h-full relative'
               )}
             >
-              <div className="relative">
-                <Icon size={22} />
+              <motion.div
+                className="relative flex items-center justify-center w-12 h-12 rounded-full"
+                animate={{
+                  y: isActive ? -20 : 0,
+                  scale: isActive ? 1.1 : 1,
+                  backgroundColor: isActive ? 'white' : 'transparent',
+                  boxShadow: isActive ? '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' : 'none'
+                }}
+                transition={{
+                  type: "spring",
+                  stiffness: 300,
+                  damping: 30
+                }}
+              >
+                <motion.div
+                  animate={{
+                    color: isActive ? 'var(--primary-foreground)' : 'var(--muted-foreground)',
+                    scale: isActive ? 1.1 : 1
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 400,
+                    damping: 25
+                  }}
+                >
+                  <Icon size={22} />
+                </motion.div>
                 {item.path === '/cart' && cartCount > 0 && (
                   <Badge className="absolute -top-2 -right-2 h-4 w-4 flex items-center justify-center p-0 bg-primary text-primary-foreground text-[10px]">
                     {cartCount > 9 ? '9+' : cartCount}
@@ -47,11 +72,24 @@ export function MobileNav() {
                     {wishlist.length > 9 ? '9+' : wishlist.length}
                   </Badge>
                 )}
-              </div>
-              <span className="text-[10px] mt-1 font-medium">{item.label}</span>
-              {isActive && (
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-primary rounded-full" />
-              )}
+              </motion.div>
+              <motion.span
+                className={cn(
+                  'text-[10px] mt-1 font-medium',
+                  isActive ? 'text-primary' : 'text-muted-foreground'
+                )}
+                animate={{
+                  scale: isActive ? 1.05 : 1,
+                  color: isActive ? 'var(--primary)' : 'var(--muted-foreground)'
+                }}
+                transition={{
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 25
+                }}
+              >
+                {item.label}
+              </motion.span>
             </Link>
           );
         })}

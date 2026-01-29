@@ -278,10 +278,25 @@ export default function Shop() {
               </div>
             ) : (
               <div className="text-center py-16">
-                <p className="text-xl text-muted-foreground mb-4">No products found</p>
-                <Button onClick={clearFilters} variant="outline">
-                  Clear Filters
-                </Button>
+                <div className="max-w-md mx-auto">
+                  <h3 className="text-2xl font-semibold text-foreground mb-4">
+                    {search ? `No products found for "${search}"` : 'No products found'}
+                  </h3>
+                  <p className="text-muted-foreground mb-6">
+                    {search 
+                      ? 'Try adjusting your search terms or browse our categories below.'
+                      : 'Try adjusting your filters or browse our categories below.'
+                    }
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                    <Button onClick={clearFilters} variant="outline">
+                      Clear Filters
+                    </Button>
+                    <Button onClick={() => window.location.href = '/shop'}>
+                      Browse All Products
+                    </Button>
+                  </div>
+                </div>
               </div>
             )}
           </div>

@@ -14,8 +14,8 @@ export default function Contact() {
             <h2 className="text-2xl font-bold mb-6">Get in Touch</h2>
             <div className="space-y-6">
               <div className="flex gap-4"><div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0"><Phone className="text-primary" size={20} /></div><div><h3 className="font-medium">Phone</h3><p className="text-muted-foreground">+880 1234-567890</p></div></div>
-              <div className="flex gap-4"><div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0"><Mail className="text-primary" size={20} /></div><div><h3 className="font-medium">Email</h3><p className="text-muted-foreground">support@shopverse.com</p></div></div>
-              <div className="flex gap-4"><div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0"><MapPin className="text-primary" size={20} /></div><div><h3 className="font-medium">Address</h3><p className="text-muted-foreground">123 Shopping Street, Dhaka 1205</p></div></div>
+              <div className="flex gap-4"><div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0"><Mail className="text-primary" size={20} /></div><div><h3 className="font-medium">Email</h3><p className="text-muted-foreground">info@saracodelabs.com.bd</p></div></div>
+              <div className="flex gap-4"><div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0"><MapPin className="text-primary" size={20} /></div><div><h3 className="font-medium">Address</h3><p className="text-muted-foreground">30/6 Johuri Moholla, Babor Road, <br/> Mohammadpur, Dhaka 1207</p></div></div>
               <div className="flex gap-4"><div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0"><Clock className="text-primary" size={20} /></div><div><h3 className="font-medium">Hours</h3><p className="text-muted-foreground">Mon-Sat: 9AM - 9PM</p></div></div>
             </div>
           </div>
