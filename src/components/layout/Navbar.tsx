@@ -22,7 +22,7 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50 bg-card/95 backdrop-blur-md border-b border-border">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16 md:h-20">
+        <div className="flex items-center justify-between h-14 lg:h-20">
           {/* Mobile Menu Button */}
           <button
             className="lg:hidden p-2 -ml-2 text-foreground"
@@ -36,7 +36,8 @@ export function Navbar() {
             <span className="bg-gradient-primary text-primary-foreground w-8 h-8 md:w-10 md:h-10 rounded-lg flex items-center justify-center text-lg md:text-xl">
               S
             </span>
-            <span className="hidden sm:inline">ShopVerse</span>
+            <span className="lg:inline hidden">ShopVerse</span>
+            <span className="lg:hidden">ShopVerse</span>
           </Link>
 
           {/* Desktop Search with Suggestions */}
@@ -48,16 +49,8 @@ export function Navbar() {
             placeholder="Search for products, brands and more..."
           />
 
-          {/* Right Actions */}
-          <div className="flex items-center gap-1 md:gap-2">
-            {/* Mobile Search Toggle */}
-            <button
-              className="lg:hidden p-2 text-foreground hover:text-primary transition-colors"
-              onClick={() => setIsSearchOpen(!isSearchOpen)}
-            >
-              <Search size={22} />
-            </button>
-
+          {/* Right Actions - Desktop only */}
+          <div className="hidden lg:flex items-center gap-2">
             {/* Wishlist */}
             <Link
               to="/wishlist"
@@ -89,17 +82,27 @@ export function Navbar() {
               <Link to="/dashboard">
                 <Button variant="ghost" size="sm" className="gap-2">
                   <User size={20} />
-                  <span className="hidden md:inline">Account</span>
+                  <span>Account</span>
                 </Button>
               </Link>
             ) : (
               <Link to="/auth">
                 <Button variant="default" size="sm" className="gap-2 bg-primary hover:bg-primary-hover">
                   <User size={18} />
-                  <span className="hidden sm:inline">Login</span>
+                  <span>Login</span>
                 </Button>
               </Link>
             )}
+          </div>
+
+          {/* Mobile - Notification/Search only */}
+          <div className="lg:hidden flex items-center">
+            <button
+              className="p-2 text-foreground hover:text-primary transition-colors"
+              onClick={() => setIsSearchOpen(!isSearchOpen)}
+            >
+              <Search size={22} />
+            </button>
           </div>
         </div>
 
