@@ -1,7 +1,18 @@
 import { Link } from 'react-router-dom';
-import { Facebook, Instagram, Twitter, Youtube, Mail, Phone, MapPin, CreditCard } from 'lucide-react';
+import { Facebook, Instagram, Twitter, Youtube, Mail, Phone, MapPin } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import googlePlayBadge from '@/assets/google-play-badge.png';
+import appStoreBadge from '@/assets/app-store-badge.png';
+import paymentBkash from '@/assets/payment-bkash.png';
+import paymentNagad from '@/assets/payment-nagad.png';
+import paymentRocket from '@/assets/payment-rocket.png';
+import paymentVisa from '@/assets/payment-visa.png';
+import paymentMastercard from '@/assets/payment-mastercard.png';
+import paymentAmex from '@/assets/payment-amex.png';
+import paymentSsl from '@/assets/payment-ssl.png';
+import paymentUpay from '@/assets/payment-upay.png';
+import paymentCod from '@/assets/payment-cod.png';
 
 export function Footer() {
   return (
@@ -31,9 +42,9 @@ export function Footer() {
       {/* Main Footer */}
       <div className="py-16">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
             {/* About */}
-            <div>
+            <div className="lg:col-span-2">
               <Link to="/" className="flex items-center gap-2 font-display text-2xl font-bold mb-6">
                 <img 
                   src="/logo2.png" 
@@ -45,11 +56,24 @@ export function Footer() {
               <p className="text-primary-foreground/70 mb-6">
                 Your one-stop destination for quality products at competitive prices. Shop with confidence.
               </p>
-              <div className="flex gap-4">
+              <div className="flex gap-4 mb-6">
                 <SocialLink href="#" icon={<Facebook size={20} />} />
                 <SocialLink href="#" icon={<Instagram size={20} />} />
                 <SocialLink href="#" icon={<Twitter size={20} />} />
                 <SocialLink href="#" icon={<Youtube size={20} />} />
+              </div>
+
+              {/* App Download */}
+              <div>
+                <h4 className="font-semibold text-sm mb-3">Download Our App</h4>
+                <div className="flex gap-3">
+                  <a href="#" className="block w-28 hover:opacity-80 transition-opacity">
+                    <img src={googlePlayBadge} alt="Get it on Google Play" className="w-full h-auto rounded-lg" />
+                  </a>
+                  <a href="#" className="block w-28 hover:opacity-80 transition-opacity">
+                    <img src={appStoreBadge} alt="Download on App Store" className="w-full h-auto rounded-lg" />
+                  </a>
+                </div>
               </div>
             </div>
 
@@ -130,13 +154,18 @@ export function Footer() {
             <p className="text-sm text-primary-foreground/60">
               © {new Date().getFullYear()} <a href="https://saracodelabs.com.bd">Sara Code Labs</a> . All rights reserved.
             </p>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3 flex-wrap justify-center">
               <span className="text-sm text-primary-foreground/60">We Accept:</span>
               <div className="flex items-center gap-2">
-                <PaymentBadge>bKash</PaymentBadge>
-                <PaymentBadge>Nagad</PaymentBadge>
-                <PaymentBadge>Rocket</PaymentBadge>
-                <PaymentBadge>SSL</PaymentBadge>
+                <PaymentLogo src={paymentAmex} alt="American Express" />
+                <PaymentLogo src={paymentMastercard} alt="Mastercard" />
+                <PaymentLogo src={paymentVisa} alt="Visa" />
+                <PaymentLogo src={paymentNagad} alt="Nagad" />
+                <PaymentLogo src={paymentBkash} alt="bKash" />
+                <PaymentLogo src={paymentUpay} alt="Upay" />
+                <PaymentLogo src={paymentRocket} alt="Rocket" />
+                <PaymentLogo src={paymentCod} alt="Cash on Delivery" />
+                <PaymentLogo src={paymentSsl} alt="SSLCommerz" />
               </div>
             </div>
           </div>
@@ -170,10 +199,10 @@ function FooterLink({ to, children }: { to: string; children: React.ReactNode })
   );
 }
 
-function PaymentBadge({ children }: { children: React.ReactNode }) {
+function PaymentLogo({ src, alt }: { src: string; alt: string }) {
   return (
-    <span className="px-3 py-1 bg-primary-foreground/10 rounded text-xs font-medium text-primary-foreground">
-      {children}
-    </span>
+    <div className="w-10 h-7 bg-primary-foreground/10 rounded flex items-center justify-center p-1">
+      <img src={src} alt={alt} className="max-w-full max-h-full object-contain" />
+    </div>
   );
 }

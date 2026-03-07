@@ -10,9 +10,9 @@ export function MenuBar() {
     <nav className="hidden lg:block bg-surface border-b border-border">
       <div className="container mx-auto px-4">
         <ul className="flex items-center gap-1">
-          {/* Categories Dropdown */}
+          {/* Categories Mega Menu */}
           <li
-            className="relative"
+            className="relative group"
             onMouseEnter={() => setActiveMenu('categories')}
             onMouseLeave={() => setActiveMenu(null)}
           >
@@ -22,23 +22,31 @@ export function MenuBar() {
             </button>
             
             {activeMenu === 'categories' && (
-              <div className="absolute top-full left-0 w-[600px] bg-card shadow-xl rounded-lg border border-border animate-fade-in z-50">
-                <div className="grid grid-cols-3 gap-6 p-6">
+              <div className="absolute top-full left-0 w-[800px] bg-card shadow-xl rounded-lg border border-border animate-fade-in z-50">
+                <div className="grid grid-cols-5 gap-0">
                   {categories.map(category => (
-                    <div key={category.id}>
-                      <Link
-                        to={`/category/${category.slug}`}
-                        className="font-semibold text-foreground hover:text-primary transition-colors"
-                      >
-                        {category.name}
+                    <div key={category.id} className="p-4 border-r border-b border-border last:border-r-0 hover:bg-surface transition-colors">
+                      {/* Category Image */}
+                      <Link to={`/category/${category.slug}`} className="block mb-3">
+                        <div className="aspect-square w-full rounded-lg overflow-hidden bg-muted mb-2">
+                          <img
+                            src={category.image || '/placeholder.svg'}
+                            alt={category.name}
+                            className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+                          />
+                        </div>
+                        <h3 className="font-bold text-sm text-foreground hover:text-primary transition-colors text-center">
+                          {category.name}
+                        </h3>
                       </Link>
+                      {/* Subcategories */}
                       {category.children && (
-                        <ul className="mt-2 space-y-1">
+                        <ul className="space-y-1">
                           {category.children.map(child => (
                             <li key={child.id}>
                               <Link
                                 to={`/category/${child.slug}`}
-                                className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                                className="text-xs text-muted-foreground hover:text-primary transition-colors block py-0.5"
                               >
                                 {child.name}
                               </Link>
@@ -86,7 +94,7 @@ export function MenuBar() {
             </Link>
           </li>
 
-          {/* Best Deals */}
+          {/* Best Sellers */}
           <li>
             <Link
               to="/shop?filter=bestseller"
