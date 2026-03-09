@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, Heart, ShoppingCart, User, Menu, X, ChevronDown } from 'lucide-react';
+import { Search, Heart, ShoppingCart, User, Menu, X, ChevronDown, Sun, Moon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useStore } from '@/context/StoreContext';
 import { SearchSuggestions } from '@/components/search/SearchSuggestions';
+import { useTheme } from '@/hooks/useTheme';
 
 export function Navbar() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -53,6 +54,8 @@ export function Navbar() {
 
           {/* Right Actions - Desktop only */}
           <div className="hidden lg:flex items-center gap-2">
+            {/* Dark Mode Toggle */}
+            <ThemeToggle />
             {/* Wishlist */}
             <Link
               to="/wishlist"
@@ -95,8 +98,9 @@ export function Navbar() {
             )}
           </div>
 
-          {/* Mobile - Only Search Button */}
-          <div className="lg:hidden flex items-center">
+          {/* Mobile - Search + Theme Toggle */}
+          <div className="lg:hidden flex items-center gap-1">
+            <ThemeToggle />
             <button
               className="p-2 text-foreground hover:text-primary transition-colors"
               onClick={() => setIsSearchOpen(!isSearchOpen)}
@@ -159,5 +163,18 @@ function MobileMenuLink({ to, onClick, children }: { to: string; onClick: () => 
     >
       {children}
     </Link>
+  );
+}
+
+function ThemeToggle() {
+  const { isDark, toggle } = useTheme();
+  return (
+    <button
+      onClick={toggle}
+      className="p-2 rounded-full text-foreground hover:text-primary hover:bg-secondary transition-all"
+      aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+    >
+      {isDark ? <Sun size={20} /> : <Moon size={20} />}
+    </button>
   );
 }
