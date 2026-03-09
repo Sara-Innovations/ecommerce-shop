@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, Heart, ShoppingCart, User, Menu, X, ChevronDown } from 'lucide-react';
+import { Search, Heart, ShoppingCart, User, Menu, X, ChevronDown, Sun, Moon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useStore } from '@/context/StoreContext';
 import { SearchSuggestions } from '@/components/search/SearchSuggestions';
+import { useTheme } from '@/hooks/useTheme';
 
 export function Navbar() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
