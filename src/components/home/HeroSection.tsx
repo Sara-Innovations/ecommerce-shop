@@ -233,19 +233,7 @@ export function HeroSection() {
               ))}
             </div>
 
-            {/* Navigation Arrows - Hidden on mobile */}
-            <button
-              onClick={prevSlide}
-              className="hidden lg:flex absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-card/90 text-foreground items-center justify-center hover:bg-card transition-colors"
-            >
-              <ChevronLeft size={20} />
-            </button>
-            <button
-              onClick={nextSlide}
-              className="hidden lg:flex absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-card/90 text-foreground items-center justify-center hover:bg-card transition-colors"
-            >
-              <ChevronRight size={20} />
-            </button>
+            {/* Navigation Arrows removed */}
 
             {/* Dots - Removed for mobile */}
             <div className="hidden lg:flex absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">

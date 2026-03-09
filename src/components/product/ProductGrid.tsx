@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Product } from '@/types';
 import { ProductCard } from './ProductCard';
@@ -30,6 +30,32 @@ export function ProductGrid({
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
+  const autoScrollRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Auto-scroll: move one item every 4 seconds
+  useEffect(() => {
+    if (!carousel || !scrollRef.current) return;
+
+    const startAutoScroll = () => {
+      autoScrollRef.current = setInterval(() => {
+        if (scrollRef.current) {
+          const container = scrollRef.current;
+          const children = Array.from(container.children);
+          const nextIndex = (activeIndex + 1) % children.length;
+          const target = children[nextIndex] as HTMLElement;
+          if (target) {
+            const containerRect = container.getBoundingClientRect();
+            const targetRect = target.getBoundingClientRect();
+            const scrollOffset = targetRect.left - containerRect.left - (containerRect.width - targetRect.width) / 2;
+            container.scrollBy({ left: scrollOffset, behavior: 'smooth' });
+          }
+        }
+      }, 4000);
+    };
+
+    startAutoScroll();
+    return () => { if (autoScrollRef.current) clearInterval(autoScrollRef.current); };
+  }, [carousel, activeIndex]);
 
   const checkScroll = () => {
     if (scrollRef.current) {

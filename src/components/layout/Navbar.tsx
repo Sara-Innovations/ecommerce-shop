@@ -82,16 +82,14 @@ export function Navbar() {
             {/* Auth */}
             {isAuthenticated ? (
               <Link to="/dashboard">
-                <Button variant="ghost" size="sm" className="gap-2">
+                <Button variant="ghost" size="icon" className="rounded-full">
                   <User size={20} />
-                  <span>Account</span>
                 </Button>
               </Link>
             ) : (
               <Link to="/auth">
-                <Button variant="default" size="sm" className="gap-2 bg-primary hover:bg-primary-hover">
+                <Button size="icon" className="rounded-full bg-gradient-to-br from-primary to-accent text-primary-foreground shadow-md hover:shadow-lg hover:scale-105 transition-all">
                   <User size={18} />
-                  <span>Login</span>
                 </Button>
               </Link>
             )}
