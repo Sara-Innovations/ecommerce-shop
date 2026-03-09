@@ -54,6 +54,8 @@ export function Navbar() {
 
           {/* Right Actions - Desktop only */}
           <div className="hidden lg:flex items-center gap-2">
+            {/* Dark Mode Toggle */}
+            <ThemeToggle />
             {/* Wishlist */}
             <Link
               to="/wishlist"
