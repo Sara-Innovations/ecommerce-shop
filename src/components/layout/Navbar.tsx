@@ -98,8 +98,9 @@ export function Navbar() {
             )}
           </div>
 
-          {/* Mobile - Only Search Button */}
-          <div className="lg:hidden flex items-center">
+          {/* Mobile - Search + Theme Toggle */}
+          <div className="lg:hidden flex items-center gap-1">
+            <ThemeToggle />
             <button
               className="p-2 text-foreground hover:text-primary transition-colors"
               onClick={() => setIsSearchOpen(!isSearchOpen)}
