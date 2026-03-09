@@ -165,3 +165,16 @@ function MobileMenuLink({ to, onClick, children }: { to: string; onClick: () => 
     </Link>
   );
 }
+
+function ThemeToggle() {
+  const { isDark, toggle } = useTheme();
+  return (
+    <button
+      onClick={toggle}
+      className="p-2 rounded-full text-foreground hover:text-primary hover:bg-secondary transition-all"
+      aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+    >
+      {isDark ? <Sun size={20} /> : <Moon size={20} />}
+    </button>
+  );
+}
