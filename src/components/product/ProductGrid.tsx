@@ -181,16 +181,10 @@ export function ProductGrid({
             {products.map((product, index) => (
               <div
                 key={product.id}
-                className={cn(
-                  "flex-shrink-0 snap-center transition-all duration-500 ease-out",
-                  // Dynamic sizing only on mobile, uniform on larger screens
-                  index === activeIndex 
-                    ? "w-[calc(75%-12px)] lg:w-[calc(25%-12px)]" // Active card - larger on mobile only
-                    : "w-[calc(45%-10.8px)] lg:w-[calc(25%-12px)]" // Inactive cards - smaller on mobile, uniform on desktop
-                )}
+                className="flex-shrink-0 snap-center w-[calc(50%-8px)] sm:w-[calc(33.333%-11px)] lg:w-[calc(25%-12px)]"
                 style={{ scrollSnapAlign: 'center' }}
               >
-                <ProductCard product={product} compact={index !== activeIndex} />
+                <ProductCard product={product} />
               </div>
             ))}
           </div>
