@@ -199,7 +199,7 @@ function DesktopFooter() {
 /* ─── Payment Strip ─── */
 function PaymentStrip() {
   return (
-    <div className="border-t border-primary-foreground/10 py-4">
+    <div className="border-t border-primary-foreground/10 py-4 pb-24 lg:pb-4">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row items-center justify-between gap-3">
           <p className="hidden md:block text-sm text-primary-foreground/60">
