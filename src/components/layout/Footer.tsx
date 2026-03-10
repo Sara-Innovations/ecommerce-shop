@@ -34,7 +34,7 @@ export function Footer() {
 /* ─── Mobile Footer (Native App Style) ─── */
 function MobileFooter() {
   return (
-    <div className="px-5 pt-8 pb-24 space-y-6">
+    <div className="px-5 pt-8 pb-4 space-y-6">
       {/* App Download CTA */}
       <div className="bg-primary-foreground/5 rounded-2xl p-5 text-center border border-primary-foreground/10">
         <div className="flex items-center justify-center gap-2 mb-2">
