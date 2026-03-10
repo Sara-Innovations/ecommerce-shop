@@ -34,7 +34,7 @@ export function Footer() {
 /* ─── Mobile Footer (Native App Style) ─── */
 function MobileFooter() {
   return (
-    <div className="px-5 pt-8 pb-24 space-y-6">
+    <div className="px-5 pt-8 pb-4 space-y-6">
       {/* App Download CTA */}
       <div className="bg-primary-foreground/5 rounded-2xl p-5 text-center border border-primary-foreground/10">
         <div className="flex items-center justify-center gap-2 mb-2">
@@ -199,7 +199,7 @@ function DesktopFooter() {
 /* ─── Payment Strip ─── */
 function PaymentStrip() {
   return (
-    <div className="border-t border-primary-foreground/10 py-4">
+    <div className="border-t border-primary-foreground/10 py-4 pb-24 lg:pb-4">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row items-center justify-between gap-3">
           <p className="hidden md:block text-sm text-primary-foreground/60">
