@@ -1,7 +1,9 @@
+import { useState, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { SplashScreen } from "@/components/SplashScreen";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { StoreProvider } from "@/context/StoreContext";
 import { ReviewsProvider } from "@/context/ReviewsContext";
@@ -31,12 +33,23 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-const App = () => (
+const App = () => {
+  const [showSplash, setShowSplash] = useState(() => window.innerWidth < 768);
+
+  useEffect(() => {
+    if (showSplash) {
+      const timer = setTimeout(() => setShowSplash(false), 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [showSplash]);
+
+  return (
   <QueryClientProvider client={queryClient}>
     <StoreProvider>
       <ReviewsProvider>
         <CompareProvider>
           <TooltipProvider>
+            <SplashScreen visible={showSplash} />
             <Toaster />
             <Sonner />
             <BrowserRouter>
@@ -71,6 +84,7 @@ const App = () => (
       </ReviewsProvider>
     </StoreProvider>
   </QueryClientProvider>
-);
+  );
+};
 
 export default App;
