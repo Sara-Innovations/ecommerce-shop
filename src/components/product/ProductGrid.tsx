@@ -184,7 +184,7 @@ export function ProductGrid({
                 className="flex-shrink-0 snap-center w-[calc(50%-8px)] sm:w-[calc(33.333%-11px)] lg:w-[calc(25%-12px)]"
                 style={{ scrollSnapAlign: 'center' }}
               >
-                <ProductCard product={product} compact={index !== activeIndex} />
+                <ProductCard product={product} />
               </div>
             ))}
           </div>
