@@ -84,6 +84,7 @@ const App = () => {
       </ReviewsProvider>
     </StoreProvider>
   </QueryClientProvider>
-);
+  );
+};
 
 export default App;
