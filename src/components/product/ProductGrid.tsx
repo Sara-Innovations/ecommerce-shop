@@ -146,49 +146,57 @@ export function ProductGrid({
         </div>
       )}
 
-      {/* Carousel */}
+      {/* Carousel on desktop, Grid on mobile */}
       {carousel ? (
-        <div className="relative">
-          {/* Scroll Buttons - Desktop only */}
-          {canScrollLeft && (
-            <Button
-              variant="secondary"
-              size="icon"
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 shadow-lg hidden lg:flex"
-              onClick={() => scroll('left')}
-            >
-              <ChevronLeft size={20} />
-            </Button>
-          )}
-          {canScrollRight && (
-            <Button
-              variant="secondary"
-              size="icon"
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 shadow-lg hidden lg:flex"
-              onClick={() => scroll('right')}
-            >
-              <ChevronRight size={20} />
-            </Button>
-          )}
-
-          {/* Scrollable Container - Touch swipe on mobile */}
-          <div
-            ref={scrollRef}
-            onScroll={checkScroll}
-            className="flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth pb-4 snap-x snap-mandatory touch-pan-x items-stretch"
-            style={{ scrollSnapType: 'x mandatory', scrollBehavior: 'smooth' }}
-          >
-            {products.map((product, index) => (
-              <div
-                key={product.id}
-                className="flex-shrink-0 snap-center w-[calc(50%-8px)] sm:w-[calc(33.333%-11px)] lg:w-[calc(25%-12px)]"
-                style={{ scrollSnapAlign: 'center' }}
-              >
-                <ProductCard product={product} />
-              </div>
+        <>
+          {/* Mobile: Grid layout */}
+          <div className={cn('grid grid-cols-2 gap-3 lg:hidden')}>
+            {products.map(product => (
+              <ProductCard key={product.id} product={product} />
             ))}
           </div>
-        </div>
+
+          {/* Desktop: Carousel */}
+          <div className="relative hidden lg:block">
+            {canScrollLeft && (
+              <Button
+                variant="secondary"
+                size="icon"
+                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 shadow-lg"
+                onClick={() => scroll('left')}
+              >
+                <ChevronLeft size={20} />
+              </Button>
+            )}
+            {canScrollRight && (
+              <Button
+                variant="secondary"
+                size="icon"
+                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 shadow-lg"
+                onClick={() => scroll('right')}
+              >
+                <ChevronRight size={20} />
+              </Button>
+            )}
+
+            <div
+              ref={scrollRef}
+              onScroll={checkScroll}
+              className="flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth pb-4 snap-x snap-mandatory touch-pan-x items-stretch"
+              style={{ scrollSnapType: 'x mandatory', scrollBehavior: 'smooth' }}
+            >
+              {products.map((product) => (
+                <div
+                  key={product.id}
+                  className="flex-shrink-0 snap-center w-[calc(25%-12px)]"
+                  style={{ scrollSnapAlign: 'center' }}
+                >
+                  <ProductCard product={product} />
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
       ) : (
         /* Grid */
         <div className={cn('grid gap-4 md:gap-6', gridCols[columns])}>
