@@ -33,12 +33,23 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-const App = () => (
+const App = () => {
+  const [showSplash, setShowSplash] = useState(() => window.innerWidth < 768);
+
+  useEffect(() => {
+    if (showSplash) {
+      const timer = setTimeout(() => setShowSplash(false), 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [showSplash]);
+
+  return (
   <QueryClientProvider client={queryClient}>
     <StoreProvider>
       <ReviewsProvider>
         <CompareProvider>
           <TooltipProvider>
+            <SplashScreen visible={showSplash} />
             <Toaster />
             <Sonner />
             <BrowserRouter>
